@@ -91,6 +91,9 @@ nav.main a:hover{color:var(--niebla)}
 .photoview{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#2c2c30 0%,#141415 52%,#0B0B0C 100%);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .photoview:active{cursor:grabbing}
 .photoview img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
+.photoview img{position:absolute;inset:0}
+#photoImg2{opacity:0}
+.photoview.cubrir img{object-fit:cover}
 .pstatus{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--niebla-2)}
 .pstatus[hidden],.photoview[hidden],.pnote[hidden]{display:none}
 .uploadbtn{display:none;position:relative;align-items:center;background:rgba(11,11,12,.75);border:1px solid var(--laton);color:var(--laton-2);padding:7px 12px;border-radius:2px;font-size:13px;font-weight:600;min-height:36px;cursor:pointer;backdrop-filter:blur(4px)}
@@ -261,7 +264,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
         </div>
         <div class="models" id="models" role="group" aria-label="Elegir modelo"></div>
         <div class="stage" id="stage">
-          <div class="photoview" id="photoView" hidden><img id="photoImg" alt="Auto visto desde un ángulo. Arrastra para girarlo." draggable="false"><div class="pstatus" id="pstatus" hidden></div></div>
+          <div class="photoview" id="photoView" hidden><img id="photoImg" alt="Auto visto desde un ángulo. Arrastra para girarlo." draggable="false"><img id="photoImg2" alt="" aria-hidden="true" draggable="false"><div class="pstatus" id="pstatus" hidden></div></div>
           <div class="badge360" aria-hidden="true">360° <span class="num" id="deg">0°</span></div>
           <div class="hint" id="hint">Arrastra para girar</div>
           <div class="nowebgl" id="nowebgl"><div><div id="fallbackSil"></div><p>Tu navegador no pudo iniciar el visor 3D. Las fotos de cada auto siguen disponibles abajo.</p></div></div>
@@ -424,7 +427,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 </main>
 
 <footer>
-  <div class="wrap"><span>Altiva Motors. Marca ficticia de ejemplo.</span><span>Prototipo de diseño, sin datos reales.</span><span>Imagen del sedán: Activedia, vía Pixabay (Licencia de Contenido de Pixabay). Es una imagen generada por computadora, solo de ejemplo.</span><span>Fotos de ejemplo del inventario: Aria Touring, 木 灬; Aria, Kamshotthat; Halcón GT, miata7 MX-5; Cumbre 4x4, Andrey Andname. Todas de Pexels, con licencia de Pexels. En la foto del Aria se difuminaron la matrícula y un texto.</span></div>
+  <div class="wrap"><span>Altiva Motors. Marca ficticia de ejemplo.</span><span>Prototipo de diseño, sin datos reales.</span><span>Imágenes del Baleno GLX: de ejemplo, aportadas para el prototipo.</span><span>Imagen del sedán: Activedia, vía Pixabay (Licencia de Contenido de Pixabay). Es una imagen generada por computadora, solo de ejemplo.</span><span>Fotos de ejemplo del inventario: Aria Touring, 木 灬; Aria, Kamshotthat; Halcón GT, miata7 MX-5; Cumbre 4x4, Andrey Andname. Todas de Pexels, con licencia de Pexels. En la foto del Aria se difuminaron la matrícula y un texto.</span></div>
 </footer>
 
 <a class="wa-float" href="#showroom" data-wa aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>WhatsApp</a>
@@ -442,7 +445,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     {n:'Rojo Carrera',c:'#8e0e19'},{n:'Blanco Glaciar',c:'#e9ecea'},{n:'Gris Nardo',c:'#7b8387'},
     {n:'Azul Medianoche',c:'#162650'},{n:'Plata Lunar',c:'#b9bec2'},{n:'Negro Obsidiana',c:'#101314'}
   ];
-  var LABEL={coupe:'Deportivo',suv:'SUV',sedan:'Sedán',ev:'Eléctrico',moto:'Moto'};
+  var LABEL={coupe:'Deportivo',suv:'SUV',sedan:'Sedán',ev:'Eléctrico',moto:'Moto',hatch:'Hatchback'};
   var CARS=[
     {name:'Halcón GT',type:'coupe',year:2025,cond:'Nuevo',color:0,foto:'img/halcon.jpg',
       specs:[['Motor','3.0 V6 biturbo'],['Potencia','380 hp'],['0 a 100 km/h','4,6 s'],['Transmisión','Automática de 8 velocidades'],['Tracción','Trasera']]},
@@ -459,7 +462,10 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     {name:'Trueno 650',type:'moto',year:2025,cond:'Nuevo',color:0,
       specs:[['Motor','649 cc bicilíndrico'],['Potencia','68 hp'],['Peso','196 kg'],['Transmisión','6 velocidades'],['Frenos','Doble disco con ABS']]},
     {name:'Ruta 300',type:'moto',year:2021,cond:'Seminuevo',color:5,
-      specs:[['Kilometraje','14.200 km'],['Motor','293 cc monocilíndrico'],['Potencia','27 hp'],['Dueños','1'],['Garantía','6 meses']]}
+      specs:[['Kilometraje','14.200 km'],['Motor','293 cc monocilíndrico'],['Potencia','27 hp'],['Dueños','1'],['Garantía','6 meses']]},
+    {name:'Baleno GLX',type:'hatch',modelo3d:'ev',year:null,cond:'Por confirmar',color:2,foto:'img/baleno-card.jpg',
+      giro:[[0,'img/giro-000.jpg'],[35,'img/giro-035.jpg'],[50,'img/giro-050.jpg'],[90,'img/giro-090.jpg'],[135,'img/giro-135.jpg'],[180,'img/giro-180.jpg'],[225,'img/giro-225.jpg'],[270,'img/giro-270.jpg'],[310,'img/giro-310.jpg'],[325,'img/giro-325.jpg']],
+      specs:[['Carrocería','Hatchback de 5 puertas'],['Color','Gris plata'],['Rines','Aleación'],['Año','Por confirmar'],['Motor','Por confirmar'],['Kilometraje','Por confirmar']]}
   ];
 
   /* ---------- siluetas SVG (tarjetas) ---------- */
@@ -484,7 +490,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   }
   function silhouette(type,color,bg){
     if(type==='moto')return silhouetteMoto(color,bg);
-    var s=SIL[type];
+    var s=SIL[type]||SIL.ev;
     function wheel(x){return '<circle cx="'+x+'" cy="63" r="17" fill="'+bg+'"/><circle cx="'+x+'" cy="63" r="13" fill="#0a0f0e"/><circle cx="'+x+'" cy="63" r="7" fill="#c4c9c6"/><circle cx="'+x+'" cy="63" r="2" fill="#0a0f0e"/>';}
     return '<svg viewBox="0 0 240 80" role="img" aria-hidden="true"><ellipse cx="124" cy="76" rx="104" ry="3" fill="rgba(0,0,0,.35)"/><path d="'+s[0]+'" fill="'+color+'"/><path d="'+s[1]+'" fill="#0b1013"/>'+wheel(60)+wheel(190)+'</svg>';
   }
@@ -923,7 +929,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   /* ---------- modo fotos reales ---------- */
   var mode='3d', photoFrames=[], pIdx=4, pStep=10, photoSource='example', dirtyFrames=true, pSpin=!reduce;
   var uploadKind='fotos', uploadedUrls=[], dragging=false, dx0=0, idx0=0, lastT=0;
-  var photoView=$('photoView'), photoImg=$('photoImg'), pstatus=$('pstatus');
+  var photoView=$('photoView'), photoImg=$('photoImg'), photoImg2=$('photoImg2'), pstatus=$('pstatus');
+  var keys=null, theta=40, th0=0;
   var pnote=document.createElement('p');pnote.className='pnote';pnote.hidden=true;
   stageEl.parentNode.insertBefore(pnote,stageEl.nextSibling);
 
@@ -951,12 +958,15 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     $('deg').textContent=(Math.round(pIdx*pStep)%360)+'°';
   }
   function updateNote(){
-    pnote.innerHTML=photoSource==='upload'
+    pnote.innerHTML=photoSource==='giro'
+      ?'Estas vistas son imágenes de ejemplo y no cubren el auto completo. El giro mezcla las vistas intermedias. Con 24 o 36 fotos reales se vería continuo.'
+      :photoSource==='upload'
       ?(uploadKind==='video'?'Estás viendo el giro de tu video ('+photoFrames.length+' fotos). ':'Estás viendo tus '+photoFrames.length+' fotos. ')+'<button type="button" id="flip">Invertir sentido</button> · <button type="button" id="backExample">Volver al ejemplo</button>'
       :'Estas 36 fotos de ejemplo salen del modelo 3D. Con el auto real el giro se ve igual. Usa «Probar con mis fotos» (de 8 a 72, en orden por nombre) o «Subir video» con una vuelta completa al auto, despacio y a distancia constante.';
   }
   function ensurePhotos(){
     updateNote();
+    if(photoSource==='giro'){paintGiro();return;}
     if(photoSource==='upload'){paintPhoto();return;}
     if(!renderer){pstatus.textContent='Este navegador no pudo generar las fotos de ejemplo. Carga las tuyas con el botón de abajo.';pstatus.hidden=false;return;}
     if(!dirtyFrames&&photoFrames.length){paintPhoto();return;}
@@ -970,6 +980,28 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     dirtyFrames=true;
     if(mode==='photos'&&photoSource==='example')ensurePhotos();
   }
+  function loadGiro(car){
+    keys=car.giro.map(function(k){return {az:k[0],url:k[1]};}).sort(function(a,b){return a.az-b.az;});
+    keys.forEach(function(k){var im=new Image();im.src=k.url;});
+    photoSource='giro';photoFrames=[];theta=keys.length>1?keys[1].az:0;
+    photoView.classList.add('cubrir');pstatus.hidden=true;photoImg.style.visibility='visible';
+  }
+  function quitarGiro(){photoView.classList.remove('cubrir');photoImg2.style.opacity=0;}
+  function paintGiro(){
+    if(!keys)return;
+    var n=keys.length,th=theta;
+    if(th<keys[0].az)th+=360;
+    var k=n-1,i;
+    for(i=0;i<n-1;i++){if(th>=keys[i].az&&th<keys[i+1].az){k=i;break;}}
+    var a=keys[k].az,b=(k===n-1)?keys[0].az+360:keys[k+1].az;
+    var t=Math.max(0,Math.min(1,((th-a)/(b-a)-.3)/.4));
+    t=t*t*(3-2*t);
+    var u1=keys[k].url,u2=keys[(k+1)%n].url;
+    if(photoImg.getAttribute('src')!==u1)photoImg.src=u1;
+    if(photoImg2.getAttribute('src')!==u2)photoImg2.src=u2;
+    photoImg2.style.opacity=t.toFixed(3);
+    $('deg').textContent=Math.round(theta%360)+'°';
+  }
   function setMode(m){
     mode=m;
     stageEl.classList.toggle('photo',m==='photos');
@@ -981,12 +1013,13 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   }
   $('modes').addEventListener('click',function(e){var b=e.target.closest('button');if(b&&b.getAttribute('data-mode')!==mode)setMode(b.getAttribute('data-mode'));});
   photoView.addEventListener('pointerdown',function(e){
-    if(!photoFrames.length)return;
-    dragging=true;dx0=e.clientX;idx0=pIdx;photoView.setPointerCapture(e.pointerId);
+    if(!photoFrames.length&&photoSource!=='giro')return;
+    dragging=true;dx0=e.clientX;idx0=pIdx;th0=theta;photoView.setPointerCapture(e.pointerId);
     hideHint();pSpin=false;setSpin(false);
   });
   photoView.addEventListener('pointermove',function(e){
     if(!dragging)return;
+    if(photoSource==='giro'){theta=((th0-(e.clientX-dx0)/photoView.clientWidth*360)%360+360)%360;paintGiro();return;}
     var n=photoFrames.length,per=photoView.clientWidth/n;
     var k=((idx0-Math.round((e.clientX-dx0)/per))%n+n)%n;
     if(k!==pIdx){pIdx=k;paintPhoto();}
@@ -995,6 +1028,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   photoView.addEventListener('pointerup',endDrag);photoView.addEventListener('pointercancel',endDrag);
   (function tick(t){
     requestAnimationFrame(tick);
+    if(photoSource==='giro'){if(mode==='photos'&&pSpin&&!dragging&&!document.hidden){theta=(theta+.4)%360;paintGiro();}return;}
     if(mode!=='photos'||!pSpin||dragging||!photoFrames.length||document.hidden)return;
     if(t-lastT>110){lastT=t;pIdx=(pIdx+1)%photoFrames.length;paintPhoto();}
   })(0);
@@ -1008,7 +1042,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     uploadedUrls.forEach(function(u){URL.revokeObjectURL(u);});
     uploadedUrls=files.map(function(f){return URL.createObjectURL(f);});
     uploadedUrls.forEach(function(u){var im=new Image();im.src=u;});
-    photoFrames=uploadedUrls.slice();photoSource='upload';uploadKind='fotos';pStep=360/photoFrames.length;pIdx=0;
+    quitarGiro();photoFrames=uploadedUrls.slice();photoSource='upload';uploadKind='fotos';pStep=360/photoFrames.length;pIdx=0;
     pstatus.hidden=true;photoImg.style.visibility='visible';
     updateNote();paintPhoto();
     toast(photoFrames.length+' fotos cargadas. Arrastra para girar.');
@@ -1031,7 +1065,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
       function finish(){
         URL.revokeObjectURL(url);
         uploadedUrls.forEach(function(u){URL.revokeObjectURL(u);});
-        uploadedUrls=urls;photoFrames=urls.slice();photoSource='upload';uploadKind='video';pStep=360/N;pIdx=0;
+        quitarGiro();uploadedUrls=urls;photoFrames=urls.slice();photoSource='upload';uploadKind='video';pStep=360/N;pIdx=0;
         pstatus.hidden=true;photoImg.style.visibility='visible';updateNote();paintPhoto();
         toast('Giro creado con '+N+' fotos de tu video.');
       }
@@ -1062,7 +1096,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     if(e.target.id==='flip'){photoFrames.reverse();paintPhoto();return;}
     if(e.target.id!=='backExample')return;
     uploadedUrls.forEach(function(u){URL.revokeObjectURL(u);});uploadedUrls=[];
-    photoSource='example';photoFrames=[];dirtyFrames=true;ensurePhotos();
+    quitarGiro();photoSource='example';photoFrames=[];dirtyFrames=true;ensurePhotos();
   });
 
   /* ---------- interfaz ---------- */
@@ -1075,16 +1109,20 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   }
   function renderPanel(){
     var c=CARS[cur];
-    $('carTags').innerHTML='<span>'+LABEL[c.type]+'</span><span>'+c.year+'</span><span>'+c.cond+'</span>';
+    $('carTags').innerHTML='<span>'+LABEL[c.type]+'</span><span>'+(c.year||'Año por confirmar')+'</span><span>'+c.cond+'</span>';
     $('carName').textContent=c.name;
     $('specs').innerHTML=c.specs.map(function(s){return '<dt>'+s[0]+'</dt><dd class="num">'+s[1]+'</dd>';}).join('');
   }
   function selectCar(i,opts){
     cur=i;colorIdx=CARS[i].color;
     if(paint)paint.color.set(COLORS[colorIdx].c);
-    renderModels();renderSwatches();renderPanel();setCar(CARS[i].type);
+    renderModels();renderSwatches();renderPanel();setCar(CARS[i].modelo3d||CARS[i].type);
     if(!renderer)renderFallback();
-    refreshExample();
+    if(CARS[i].giro){loadGiro(CARS[i]);setMode('photos');}
+    else{
+      if(photoSource==='giro'){quitarGiro();photoSource='example';dirtyFrames=true;photoFrames=[];}
+      refreshExample();
+    }
     if(opts&&opts.scroll)$('showroom').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
   }
   $('models').addEventListener('click',function(e){var b=e.target.closest('button');if(b)selectCar(+b.getAttribute('data-i'));});
@@ -1095,7 +1133,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     refreshExample();
   });
 
-  var FILTERS=[['todos','Todos'],['Nuevo','Nuevos'],['Seminuevo','Seminuevos'],['suv','SUV'],['sedan','Sedán'],['coupe','Deportivo'],['ev','Eléctrico'],['moto','Motos']];
+  var FILTERS=[['todos','Todos'],['Nuevo','Nuevos'],['Seminuevo','Seminuevos'],['suv','SUV'],['sedan','Sedán'],['coupe','Deportivo'],['ev','Eléctrico'],['hatch','Hatchback'],['moto','Motos']];
   var filter='todos';
   var SOLO_CON_FOTO=true;
   function visible(c){return !SOLO_CON_FOTO||!!c.foto;}
@@ -1107,7 +1145,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     $('grid').innerHTML=list.length?list.map(function(o){
       var c=o.c;
       return '<article class="car"><div class="pic'+(c.foto?' foto':'')+'"><span class="tag'+(c.cond==='Nuevo'?'':' used')+'">'+c.cond+'</span>'+(c.foto?'<img src="'+c.foto+'" alt="'+c.name+' (foto de ejemplo)" loading="lazy" width="800" height="498">':silhouette(c.type,COLORS[c.color].c,'#1C1C1E'))+'</div>'+
-        '<div class="info"><h3>'+c.name+'</h3><div class="meta">'+c.year+' · '+LABEL[c.type]+' · '+COLORS[c.color].n+'</div>'+
+        '<div class="info"><h3>'+c.name+'</h3><div class="meta">'+(c.year||'Año por confirmar')+' · '+LABEL[c.type]+' · '+COLORS[c.color].n+'</div>'+
         '<div class="foot"><button type="button" data-i="'+o.i+'">Ver en 360°</button></div></div></article>';
     }).join(''):'<p class="vacio">No hay autos con ese filtro. Prueba con otro tipo.</p>';
   }
