@@ -100,6 +100,9 @@ nav.main a:hover{color:var(--niebla)}
 .uploadbtn:hover{background:var(--laton);color:#fff}
 .uploadbtn input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
 .uploadbtn:focus-within{outline:2px solid var(--laton-2);outline-offset:2px}
+.nsel{display:none;background:rgba(11,11,12,.75);border:1px solid var(--laton);color:var(--laton-2);padding:7px 10px;border-radius:2px;font-size:13px;font-weight:600;min-height:36px;cursor:pointer;font-family:inherit}
+.nsel option{background:#141415;color:#F4F4F5}
+.stage.photo .nsel{display:inline-block}
 .stage.photo .uploadbtn{display:inline-flex}
 .stage.photo .views [data-view]{display:none}
 .pnote{font-size:14px;color:var(--niebla-2);margin-top:10px;max-width:62ch}
@@ -276,6 +279,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
             <span class="spacer"></span>
             <label class="uploadbtn">Probar con mis fotos<input type="file" id="file" accept="image/*" multiple aria-label="Elegir las fotos del auto, de 8 a 72 imágenes"></label>
             <label class="uploadbtn">Subir video<input type="file" id="videoFile" accept="video/*" aria-label="Elegir un video con una vuelta completa al auto"></label>
+            <select class="nsel" id="nFotos" aria-label="Cantidad de fotos que se sacan del video"><option value="24">24 fotos</option><option value="36" selected>36 fotos</option><option value="72">72 fotos</option></select>
             <button type="button" id="spin" aria-pressed="true">Girar solo</button>
           </div>
         </div>
@@ -962,7 +966,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
       ?'Estas vistas son imágenes de ejemplo y no cubren el auto completo. El giro mezcla las vistas intermedias. Con 24 o 36 fotos reales se vería continuo.'
       :photoSource==='upload'
       ?(uploadKind==='video'?'Estás viendo el giro de tu video ('+photoFrames.length+' fotos). ':'Estás viendo tus '+photoFrames.length+' fotos. ')+'<button type="button" id="flip">Invertir sentido</button> · <button type="button" id="backExample">Volver al ejemplo</button>'
-      :'Estas 36 fotos de ejemplo salen del modelo 3D. Con el auto real el giro se ve igual. Usa «Probar con mis fotos» (de 8 a 72, en orden por nombre) o «Subir video» con una vuelta completa al auto, despacio y a distancia constante.';
+      :'Estas 36 fotos de ejemplo salen del modelo 3D. Con el auto real el giro se ve igual. Usa «Probar con mis fotos» (de 8 a 72, en orden por nombre) o «Subir video» con una vuelta completa al auto, despacio y a distancia constante (elige antes cuántas fotos sacar: 24, 36 o 72).';
   }
   function ensurePhotos(){
     updateNote();
@@ -1048,7 +1052,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     toast(photoFrames.length+' fotos cargadas. Arrastra para girar.');
   });
   function extractFrames(file){
-    var N=36,url=URL.createObjectURL(file),v=document.createElement('video'),urls=[];
+    var N=+$('nFotos').value||36,url=URL.createObjectURL(file),v=document.createElement('video'),urls=[];
     v.muted=true;v.playsInline=true;v.preload='auto';v.src=url;
     pstatus.textContent='Leyendo el video…';pstatus.hidden=false;photoImg.style.visibility='hidden';
     function fail(msg){
