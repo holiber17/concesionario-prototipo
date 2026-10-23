@@ -12,17 +12,17 @@
 <style>
 /* Concepto: un showroom oscuro donde el visor 360 es lo primero que se ve; la propuesta de marca va en una banda clara al final. */
 :root{
-  --asfalto:#0A1512;
-  --pista:#0F2A23;
-  --pista-2:#143329;
-  --pista-3:#1F4A3C;
-  --laton:#C9A66B;
-  --laton-2:#E1C48F;
-  --niebla:#E8EDE9;
-  --niebla-2:#A7B6AE;
-  --rubi:#B5302A;
-  --tinta-2:#42584F;
-  --linea:rgba(201,166,107,.28);
+  --asfalto:#0B0B0C;
+  --pista:#141415;
+  --pista-2:#1C1C1E;
+  --pista-3:#2F2F33;
+  --laton:#E11D2E;
+  --laton-2:#FF5C61;
+  --niebla:#F4F4F5;
+  --niebla-2:#B4B4B8;
+  --rubi:#9E1520;
+  --tinta-2:#55555A;
+  --linea:rgba(255,255,255,.16);
   --f-display:'Archivo','Arial Narrow',Arial,sans-serif;
   --f-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:dark;
@@ -52,30 +52,33 @@ nav.main{display:flex;gap:6px 26px;align-items:center;flex-wrap:wrap}
 nav.main a{text-decoration:none;font-weight:500;color:var(--niebla-2);padding-block:6px}
 nav.main a:hover{color:var(--niebla)}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--laton);background:var(--laton);color:var(--asfalto);font-weight:700;padding:12px 20px;border-radius:2px;text-decoration:none;min-height:44px}
-.btn:hover{background:var(--laton-2);border-color:var(--laton-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--laton);background:var(--laton);color:#fff;font-weight:700;padding:12px 20px;border-radius:2px;text-decoration:none;min-height:44px}
+.btn:hover{background:var(--rubi);border-color:var(--rubi)}
 .btn.ghost{background:transparent;color:var(--niebla)}
-.btn.ghost:hover{background:rgba(201,166,107,.12)}
+.btn.ghost:hover{background:rgba(225,29,46,.16);border-color:var(--laton)}
 
 /* Showroom */
 .showroom{padding-block:48px 56px}
 .showroom h1{font-size:clamp(2.1rem,5.4vw,4.4rem);max-width:15ch}
 .showroom .sub{color:var(--niebla-2);max-width:56ch;margin-top:16px;font-size:1.06rem}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px 32px;align-items:center}
+.hero-foto{margin:0;min-width:0}
+.hero-foto img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 55%,transparent 100%)}
 .sr-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:32px 48px;margin-top:32px;align-items:start}
 .models{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .models button{background:transparent;border:1px solid var(--pista-3);color:var(--niebla-2);padding:8px 14px;border-radius:2px;font-weight:500;min-height:40px}
-.models button[aria-pressed="true"]{border-color:var(--laton);color:var(--niebla);background:rgba(201,166,107,.14)}
-.stage{position:relative;aspect-ratio:16/10;min-height:340px;background:radial-gradient(ellipse at 50% 38%,#1f4a3c 0%,#0F2A23 52%,#0A1512 100%);border:1px solid var(--pista-3);border-radius:6px;overflow:hidden;touch-action:pan-y}
+.models button[aria-pressed="true"]{border-color:var(--laton);color:var(--niebla);background:rgba(225,29,46,.2)}
+.stage{position:relative;aspect-ratio:16/10;min-height:340px;background:radial-gradient(ellipse at 50% 38%,#2c2c30 0%,#141415 52%,#0B0B0C 100%);border:1px solid var(--pista-3);border-radius:6px;overflow:hidden;touch-action:pan-y}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 .stage canvas:active{cursor:grabbing}
-.badge360{position:absolute;left:14px;top:14px;display:flex;align-items:baseline;gap:8px;background:rgba(10,21,18,.66);border:1px solid var(--linea);padding:6px 12px;border-radius:2px;font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:15px;pointer-events:none}
+.badge360{position:absolute;left:14px;top:14px;display:flex;align-items:baseline;gap:8px;background:rgba(11,11,12,.7);border:1px solid var(--linea);padding:6px 12px;border-radius:2px;font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:15px;pointer-events:none}
 .badge360 span{color:var(--laton);min-width:3ch;display:inline-block;text-align:right}
-.hint{position:absolute;right:14px;top:14px;background:rgba(10,21,18,.66);padding:6px 12px;font-size:13px;color:var(--niebla-2);border-radius:2px;pointer-events:none;transition:opacity .5s}
+.hint{position:absolute;right:14px;top:14px;background:rgba(11,11,12,.7);padding:6px 12px;font-size:13px;color:var(--niebla-2);border-radius:2px;pointer-events:none;transition:opacity .5s}
 .hint.off{opacity:0}
 .views{position:absolute;left:12px;right:12px;bottom:12px;display:flex;gap:6px;flex-wrap:wrap}
-.views button{background:rgba(10,21,18,.72);border:1px solid var(--linea);padding:7px 12px;border-radius:2px;font-size:13px;font-weight:500;min-height:36px;backdrop-filter:blur(4px)}
+.views button{background:rgba(11,11,12,.75);border:1px solid var(--linea);padding:7px 12px;border-radius:2px;font-size:13px;font-weight:500;min-height:36px;backdrop-filter:blur(4px)}
 .views button:hover{border-color:var(--laton)}
-.views button[aria-pressed="true"]{background:var(--laton);color:var(--asfalto);border-color:var(--laton)}
+.views button[aria-pressed="true"]{background:var(--laton);color:#fff;border-color:var(--laton)}
 .views .spacer{flex:1}
 .nowebgl{position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:24px;color:var(--niebla-2)}
 .nowebgl svg{width:min(70%,420px);height:auto}
@@ -85,13 +88,13 @@ nav.main a:hover{color:var(--niebla)}
 .modes button:first-child{border-radius:2px 0 0 2px}
 .modes button:last-child{border-radius:0 2px 2px 0;border-left:0}
 .modes button[aria-pressed="true"]{background:var(--niebla);color:var(--asfalto);border-color:var(--niebla)}
-.photoview{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#1f4a3c 0%,#0F2A23 52%,#0A1512 100%);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.photoview{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#2c2c30 0%,#141415 52%,#0B0B0C 100%);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .photoview:active{cursor:grabbing}
 .photoview img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
 .pstatus{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--niebla-2)}
 .pstatus[hidden],.photoview[hidden],.pnote[hidden]{display:none}
-.uploadbtn{display:none;position:relative;align-items:center;background:rgba(10,21,18,.72);border:1px solid var(--laton);color:var(--laton-2);padding:7px 12px;border-radius:2px;font-size:13px;font-weight:600;min-height:36px;cursor:pointer;backdrop-filter:blur(4px)}
-.uploadbtn:hover{background:var(--laton);color:var(--asfalto)}
+.uploadbtn{display:none;position:relative;align-items:center;background:rgba(11,11,12,.75);border:1px solid var(--laton);color:var(--laton-2);padding:7px 12px;border-radius:2px;font-size:13px;font-weight:600;min-height:36px;cursor:pointer;backdrop-filter:blur(4px)}
+.uploadbtn:hover{background:var(--laton);color:#fff}
 .uploadbtn input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
 .uploadbtn:focus-within{outline:2px solid var(--laton-2);outline-offset:2px}
 .stage.photo .uploadbtn{display:inline-flex}
@@ -109,7 +112,7 @@ dl.specs dd{text-align:right;font-weight:600}
 .block-title{font:700 15px/1.2 var(--f-body);margin:26px 0 10px;display:flex;justify-content:space-between;gap:12px}
 .block-title span{font-weight:500;color:var(--niebla-2)}
 .swatches{display:flex;gap:10px;flex-wrap:wrap}
-.swatches button{width:40px;height:40px;border-radius:50%;border:2px solid rgba(232,237,233,.3);box-shadow:inset 0 0 0 2px var(--asfalto);padding:0}
+.swatches button{width:40px;height:40px;border-radius:50%;border:2px solid rgba(244,244,245,.3);box-shadow:inset 0 0 0 2px var(--asfalto);padding:0}
 .swatches button[aria-pressed="true"]{border-color:var(--laton)}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 
@@ -123,6 +126,8 @@ dl.specs dd{text-align:right;font-weight:600}
 .car{background:var(--pista-2);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .car .pic{padding:22px 18px 6px;position:relative}
 .car .pic svg{width:100%;height:auto;display:block}
+.car .pic.foto{padding:0}
+.car .pic.foto img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:cover}
 .car .tag{position:absolute;left:12px;top:12px;background:var(--asfalto);font-size:12px;padding:3px 9px;border-radius:2px;color:var(--laton-2)}
 .car .tag.used{color:var(--niebla)}
 .car .info{padding:12px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
@@ -131,7 +136,7 @@ dl.specs dd{text-align:right;font-weight:600}
 .car .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
 .car .foot b{font:800 1.15rem/1 var(--f-display);font-stretch:112%}
 .car .foot button{background:transparent;border:1px solid var(--laton);color:var(--laton-2);padding:8px 12px;border-radius:2px;font-weight:600;min-height:40px}
-.car .foot button:hover{background:var(--laton);color:var(--asfalto)}
+.car .foot button:hover{background:var(--laton);color:#fff}
 .vacio{color:var(--niebla-2);padding:30px 0}
 
 .consigna{padding-block:56px;border-top:1px solid var(--linea)}
@@ -149,12 +154,10 @@ dl.specs dd{text-align:right;font-weight:600}
 #consigna button{justify-self:start}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ok{color:var(--laton-2);font-weight:600}
-.wa-float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:inline-flex;align-items:center;gap:8px;background:var(--laton);color:var(--asfalto);font-weight:700;padding:12px 18px;border-radius:99px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);min-height:44px}
-.wa-float:hover{background:var(--laton-2)}
-.btn[data-wa],.wa-float{background:#25D366;border-color:#25D366;color:var(--asfalto)}
-.btn[data-wa]:hover,.wa-float:hover{background:#5BE38D;border-color:#5BE38D}
+.wa-float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:inline-flex;align-items:center;gap:8px;background:var(--laton);color:#fff;font-weight:700;padding:12px 18px;border-radius:99px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);min-height:44px}
+.wa-float:hover{background:var(--rubi)}
 /* Propuesta (banda clara) */
-.light{background:var(--niebla);color:var(--pista);--linea-l:rgba(15,42,35,.18)}
+.light{background:var(--niebla);color:var(--pista);--linea-l:rgba(11,11,12,.16)}
 .light .sec{padding-block:64px;border-top:1px solid var(--linea-l)}
 .light .sec:first-child{border-top:0}
 .light p.lead{color:var(--tinta-2);max-width:62ch;margin-top:14px;font-size:1.06rem}
@@ -166,7 +169,7 @@ dl.specs dd{text-align:right;font-weight:600}
 .tile .logo svg{width:60px;height:60px}
 .tile .logo b{font-size:34px}
 .tile .logo small{font-size:13px}
-.tile.mid .logo small{color:#8a6a33}
+.tile.mid .logo small{color:#B3131F}
 .pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:28px}
 .sw{border-radius:4px;overflow:hidden;background:#fff;border:1px solid var(--linea-l);min-width:0}
 .sw i{display:block;height:110px}
@@ -203,6 +206,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 #toast.on{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
   .cg{grid-template-columns:minmax(0,1fr)}
   .sr-grid,.two{grid-template-columns:minmax(0,1fr)}
   .stage{min-height:300px}
@@ -222,7 +226,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#showroom" aria-label="Altiva Motors, inicio">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#C9A66B" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#E11D2E" stroke-width="3.5" stroke-linecap="round"/></svg>
       <span><b>ALTIVA</b><small>MOTORS</small></span>
     </a>
     <nav class="main" aria-label="Principal">
@@ -238,8 +242,13 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 <main>
 <section class="showroom" id="showroom">
   <div class="wrap">
-    <h1>Míralo entero antes de venir</h1>
-    <p class="sub">Gira cada auto y cambia el color desde el celular. Cuando ya sepas cuál quieres, agenda la prueba de manejo.</p>
+    <div class="hero">
+      <div class="hero-txt">
+        <h1>Míralo entero antes de venir</h1>
+        <p class="sub">Gira cada auto y cambia el color desde el celular. Cuando ya sepas cuál quieres, agenda la prueba de manejo.</p>
+      </div>
+      <figure class="hero-foto"><img src="img/auto-rojo.jpg" width="1040" height="600" alt="Sedán deportivo rojo en un estudio oscuro, visto de frente y de lado"></figure>
+    </div>
 
     <div class="sr-grid">
       <div style="min-width:0">
@@ -325,13 +334,13 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
     <section class="sec">
       <h2 class="sec-h">Propuesta de identidad</h2>
-      <p class="lead">Altiva se apoya en una idea: comprar un auto es una decisión grande y merece calma. La marca se ve como un showroom de noche, sobrio y bien iluminado, con un detalle de latón que guía la vista hacia las acciones.</p>
+      <p class="lead">Altiva se apoya en una idea: comprar un auto es una decisión grande y merece calma. La marca se ve como un showroom de noche, sobrio y bien iluminado, con un acento rojo que guía la vista hacia las acciones.</p>
       <div class="two">
         <div class="tile dark">
-          <span class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#C9A66B" stroke-width="3.5" stroke-linecap="round"/></svg><span><b>ALTIVA</b><small>MOTORS</small></span></span>
+          <span class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#E11D2E" stroke-width="3.5" stroke-linecap="round"/></svg><span><b>ALTIVA</b><small>MOTORS</small></span></span>
         </div>
         <div class="tile mid">
-          <span class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#8a6a33" stroke-width="3.5" stroke-linecap="round"/></svg><span><b>ALTIVA</b><small>MOTORS</small></span></span>
+          <span class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34 L20 6 L34 34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M12.5 34 A7.5 7.5 0 0 1 27.5 34" fill="none" stroke="#B3131F" stroke-width="3.5" stroke-linecap="round"/></svg><span><b>ALTIVA</b><small>MOTORS</small></span></span>
         </div>
       </div>
       <p class="lead">El símbolo es una A cuya barra central es un arco de rueda. Funciona solo, como sello en el portal y en la firma de las fichas, y se reduce bien a 24 px. El nombre sugiere altura y buen nivel sin prometer lujo.</p>
@@ -339,13 +348,13 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
     <section class="sec">
       <h2 class="sec-h">Paleta de colores</h2>
-      <p class="lead">Verde carrera, latón y niebla: un verde profundo en lugar del negro típico del rubro, con un solo acento cálido. El rojo queda reservado para ofertas y avisos.</p>
+      <p class="lead">Negro, rojo y blanco: la combinación clásica del rubro. El negro da peso, el blanco da claridad y el rojo se reserva para las acciones y los detalles que guían la vista.</p>
       <div class="pal">
-        <div class="sw"><i style="background:#0F2A23"></i><div><b>Verde Pista</b><code>#0F2A23</code><p>Fondo principal y botones oscuros.</p></div></div>
-        <div class="sw"><i style="background:#0A1512"></i><div><b>Asfalto</b><code>#0A1512</code><p>Fondos profundos y texto sobre latón.</p></div></div>
-        <div class="sw"><i style="background:#C9A66B"></i><div><b>Latón</b><code>#C9A66B</code><p>Botones, enlaces y detalles. 6,6:1 sobre Verde Pista.</p></div></div>
-        <div class="sw"><i style="background:#E8EDE9;border-bottom:1px solid rgba(15,42,35,.18)"></i><div><b>Niebla</b><code>#E8EDE9</code><p>Texto y fondos claros. Más de 12:1 sobre Verde Pista.</p></div></div>
-        <div class="sw"><i style="background:#B5302A"></i><div><b>Rubí Freno</b><code>#B5302A</code><p>Solo ofertas, últimas unidades y errores.</p></div></div>
+        <div class="sw"><i style="background:#0B0B0C"></i><div><b>Negro Asfalto</b><code>#0B0B0C</code><p>Fondo principal. Blanco sobre este negro: más de 18:1.</p></div></div>
+        <div class="sw"><i style="background:#E11D2E"></i><div><b>Rojo Carrera</b><code>#E11D2E</code><p>Botones, íconos y detalles. Con texto blanco: 4,8:1.</p></div></div>
+        <div class="sw"><i style="background:#FF5C61"></i><div><b>Rojo Claro</b><code>#FF5C61</code><p>Texto rojo sobre fondo negro. 6,5:1 sobre Negro Asfalto.</p></div></div>
+        <div class="sw"><i style="background:#F4F4F5;border-bottom:1px solid rgba(11,11,12,.16)"></i><div><b>Blanco Pista</b><code>#F4F4F5</code><p>Texto y fondos claros.</p></div></div>
+        <div class="sw"><i style="background:#9E1520"></i><div><b>Rojo Profundo</b><code>#9E1520</code><p>Botones al pasar el cursor y estados activos.</p></div></div>
       </div>
     </section>
 
@@ -412,7 +421,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 </main>
 
 <footer>
-  <div class="wrap"><span>Altiva Motors. Marca ficticia de ejemplo.</span><span>Prototipo de diseño, sin datos reales.</span></div>
+  <div class="wrap"><span>Altiva Motors. Marca ficticia de ejemplo.</span><span>Prototipo de diseño, sin datos reales.</span><span>Imagen del sedán: Activedia, vía Pixabay (Licencia de Contenido de Pixabay). Es una imagen generada por computadora, solo de ejemplo.</span><span>Fotos de ejemplo del inventario: Aria Touring, 木 灬; Aria, Kamshotthat; Halcón GT, miata7 MX-5; Cumbre 4x4, Andrey Andname. Todas de Pexels, con licencia de Pexels. En la foto del Aria se difuminaron la matrícula y un texto.</span></div>
 </footer>
 
 <a class="wa-float" href="#showroom" data-wa aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>WhatsApp</a>
@@ -427,26 +436,26 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
   /* ---------- datos de ejemplo ---------- */
   var COLORS=[
-    {n:'Verde Pista',c:'#1f5a46'},{n:'Blanco Glaciar',c:'#e9ecea'},{n:'Gris Nardo',c:'#7b8387'},
-    {n:'Azul Medianoche',c:'#162650'},{n:'Rojo Rubí',c:'#a3202a'},{n:'Negro Obsidiana',c:'#101314'}
+    {n:'Rojo Carrera',c:'#8e0e19'},{n:'Blanco Glaciar',c:'#e9ecea'},{n:'Gris Nardo',c:'#7b8387'},
+    {n:'Azul Medianoche',c:'#162650'},{n:'Plata Lunar',c:'#b9bec2'},{n:'Negro Obsidiana',c:'#101314'}
   ];
   var LABEL={coupe:'Deportivo',suv:'SUV',sedan:'Sedán',ev:'Eléctrico',moto:'Moto'};
   var CARS=[
-    {name:'Halcón GT',type:'coupe',year:2025,cond:'Nuevo',color:0,
+    {name:'Halcón GT',type:'coupe',year:2025,cond:'Nuevo',color:0,foto:'img/halcon.jpg',
       specs:[['Motor','3.0 V6 biturbo'],['Potencia','380 hp'],['0 a 100 km/h','4,6 s'],['Transmisión','Automática de 8 velocidades'],['Tracción','Trasera']]},
     {name:'Sierra X',type:'suv',year:2025,cond:'Nuevo',color:2,
       specs:[['Motor','2.0 turbo'],['Potencia','250 hp'],['Transmisión','Automática de 8 velocidades'],['Tracción','4x4 permanente'],['Maletero','620 litros']]},
-    {name:'Aria',type:'sedan',year:2025,cond:'Nuevo',color:1,
+    {name:'Aria',type:'sedan',year:2025,cond:'Nuevo',color:1,foto:'img/aria.jpg',
       specs:[['Motor','2.0 híbrido'],['Potencia','190 hp'],['Consumo mixto','4,8 l/100 km'],['Transmisión','Automática CVT'],['Maletero','510 litros']]},
     {name:'Volta E',type:'ev',year:2025,cond:'Nuevo',color:3,
       specs:[['Batería','62 kWh'],['Potencia','204 hp'],['Autonomía','420 km (ciclo WLTP)'],['Carga rápida','10 a 80 % en 32 min'],['Tracción','Delantera']]},
-    {name:'Cumbre 4x4',type:'suv',year:2022,cond:'Seminuevo',color:0,
+    {name:'Cumbre 4x4',type:'suv',year:2022,cond:'Seminuevo',color:5,foto:'img/cumbre.jpg',
       specs:[['Kilometraje','28.600 km'],['Motor','2.5 gasolina'],['Potencia','203 hp'],['Dueños','1'],['Garantía','12 meses']]},
-    {name:'Aria Touring',type:'sedan',year:2023,cond:'Seminuevo',color:4,
+    {name:'Aria Touring',type:'sedan',year:2023,cond:'Seminuevo',color:4,foto:'img/aria-touring.jpg',
       specs:[['Kilometraje','19.400 km'],['Motor','2.0 gasolina'],['Potencia','170 hp'],['Dueños','1'],['Garantía','12 meses']]},
-    {name:'Trueno 650',type:'moto',year:2025,cond:'Nuevo',color:4,
+    {name:'Trueno 650',type:'moto',year:2025,cond:'Nuevo',color:0,
       specs:[['Motor','649 cc bicilíndrico'],['Potencia','68 hp'],['Peso','196 kg'],['Transmisión','6 velocidades'],['Frenos','Doble disco con ABS']]},
-    {name:'Ruta 300',type:'moto',year:2021,cond:'Seminuevo',color:3,
+    {name:'Ruta 300',type:'moto',year:2021,cond:'Seminuevo',color:5,
       specs:[['Kilometraje','14.200 km'],['Motor','293 cc monocilíndrico'],['Potencia','27 hp'],['Dueños','1'],['Garantía','6 meses']]}
   ];
 
@@ -460,8 +469,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   function silhouetteMoto(color,bg){
     function wheel(x){return '<circle cx="'+x+'" cy="60" r="19" fill="none" stroke="#0a0f0e" stroke-width="6"/><circle cx="'+x+'" cy="60" r="12" fill="'+bg+'" stroke="#c4c9c6" stroke-width="2"/><circle cx="'+x+'" cy="60" r="2.5" fill="#c4c9c6"/>';}
     return '<svg viewBox="0 0 240 80" role="img" aria-hidden="true"><ellipse cx="120" cy="77" rx="100" ry="3" fill="rgba(0,0,0,.35)"/>'+
-      '<path d="M62 60 L96 52 L132 56" fill="none" stroke="#1b2421" stroke-width="5" stroke-linecap="round"/>'+
-      '<rect x="92" y="44" width="46" height="18" rx="4" fill="#1b2421"/>'+
+      '<path d="M62 60 L96 52 L132 56" fill="none" stroke="#222224" stroke-width="5" stroke-linecap="round"/>'+
+      '<rect x="92" y="44" width="46" height="18" rx="4" fill="#222224"/>'+
       '<path d="M92 40 Q108 22 140 28 L150 38 L96 44 Z" fill="'+color+'"/>'+
       '<path d="M60 40 L92 38 L96 44 L58 46 Z" fill="#0b1013"/>'+
       '<path d="M56 46 Q50 40 60 36 L66 40 Z" fill="'+color+'"/>'+
@@ -766,7 +775,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
   function envTexture(){
     var s=new T.Scene();
-    s.add(new T.Mesh(new T.BoxGeometry(30,14,30),new T.MeshBasicMaterial({color:0x22362f,side:T.BackSide})));
+    s.add(new T.Mesh(new T.BoxGeometry(30,14,30),new T.MeshBasicMaterial({color:0x2a2a2e,side:T.BackSide})));
     function panel(w,h,x,y,z,rx,ry,v){
       var m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:new T.Color(v,v,v),side:T.DoubleSide}));
       m.position.set(x,y,z);m.rotation.set(rx,ry,0);s.add(m);
@@ -784,7 +793,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   function radialTex(){
     var c=document.createElement('canvas');c.width=c.height=512;
     var x=c.getContext('2d'),g=x.createRadialGradient(256,256,0,256,256,256);
-    g.addColorStop(0,'rgba(60,120,98,.55)');g.addColorStop(.55,'rgba(31,74,60,.28)');g.addColorStop(1,'rgba(15,42,35,0)');
+    g.addColorStop(0,'rgba(120,120,128,.45)');g.addColorStop(.55,'rgba(70,70,76,.25)');g.addColorStop(1,'rgba(20,20,22,0)');
     x.fillStyle=g;x.fillRect(0,0,512,512);
     var t=new T.CanvasTexture(c);return t;
   }
@@ -813,7 +822,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     var sc=dir.shadow.camera;sc.left=-4.5;sc.right=4.5;sc.top=4.5;sc.bottom=-4.5;sc.near=1;sc.far=18;
     dir.shadow.radius=5;dir.shadow.bias=-.0004;
     scene.add(dir);
-    scene.add(new T.HemisphereLight(0xdfeee8,0x0f2a23,.25));
+    scene.add(new T.HemisphereLight(0xeeeeee,0x141415,.25));
 
     var floor=new T.Mesh(new T.CircleGeometry(7,64).rotateX(-Math.PI/2),new T.MeshBasicMaterial({map:radialTex(),transparent:true,depthWrite:false}));
     floor.position.y=-.002;scene.add(floor);
@@ -822,8 +831,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     var tp=[];
     for(var i=0;i<72;i++){var a=i/72*Math.PI*2,r1=3.7,r2=i%6===0?3.98:3.84;tp.push(Math.cos(a)*r1,.004,Math.sin(a)*r1,Math.cos(a)*r2,.004,Math.sin(a)*r2);}
     var tg=new T.BufferGeometry();tg.setAttribute('position',new T.Float32BufferAttribute(tp,3));
-    scene.add(new T.LineSegments(tg,new T.LineBasicMaterial({color:0xC9A66B,transparent:true,opacity:.6})));
-    var ring=new T.Mesh(new T.RingGeometry(3.62,3.655,120).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xC9A66B,transparent:true,opacity:.5,side:T.DoubleSide}));
+    scene.add(new T.LineSegments(tg,new T.LineBasicMaterial({color:0xE11D2E,transparent:true,opacity:.6})));
+    var ring=new T.Mesh(new T.RingGeometry(3.62,3.655,120).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xE11D2E,transparent:true,opacity:.5,side:T.DoubleSide}));
     ring.position.y=.003;scene.add(ring);
 
     paint=new T.MeshPhysicalMaterial({color:COLORS[colorIdx].c,metalness:.35,roughness:.34,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:.9});
@@ -887,7 +896,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     renderFallback();
   }
   function renderFallback(){
-    var c=CARS[cur];$('fallbackSil').innerHTML=silhouette(c.type,COLORS[colorIdx].c,'#0F2A23');
+    var c=CARS[cur];$('fallbackSil').innerHTML=silhouette(c.type,COLORS[colorIdx].c,'#141415');
   }
   function hideHint(){$('hint').classList.add('off');}
   function setSpin(on){$('spin').setAttribute('aria-pressed',on?'true':'false');}
@@ -926,7 +935,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
       camera.position.set(Math.sin(a)*7.2,1.45,Math.cos(a)*7.2);camera.lookAt(controls.target);
       renderer.render(scene,camera);
       var g=x.createRadialGradient(ow/2,oh*.38,0,ow/2,oh*.38,Math.max(ow,oh)*.7);
-      g.addColorStop(0,'#1f4a3c');g.addColorStop(.52,'#0F2A23');g.addColorStop(1,'#0A1512');
+      g.addColorStop(0,'#2c2c30');g.addColorStop(.52,'#141415');g.addColorStop(1,'#0B0B0C');
       x.fillStyle=g;x.fillRect(0,0,ow,oh);x.drawImage(src,0,0,ow,oh);
       out.push(off.toDataURL('image/jpeg',.82));
     }
@@ -1085,14 +1094,16 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
   var FILTERS=[['todos','Todos'],['Nuevo','Nuevos'],['Seminuevo','Seminuevos'],['suv','SUV'],['sedan','Sedán'],['coupe','Deportivo'],['ev','Eléctrico'],['moto','Motos']];
   var filter='todos';
+  var SOLO_CON_FOTO=true;
+  function visible(c){return !SOLO_CON_FOTO||!!c.foto;}
   function renderChips(){
-    $('chips').innerHTML=FILTERS.map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(f[0]===filter)+'">'+f[1]+'</button>';}).join('');
+    $('chips').innerHTML=FILTERS.filter(function(f){return f[0]==='todos'||CARS.some(function(c){return visible(c)&&(c.cond===f[0]||c.type===f[0]);});}).map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(f[0]===filter)+'">'+f[1]+'</button>';}).join('');
   }
   function renderGrid(){
-    var list=CARS.map(function(c,i){return {c:c,i:i};}).filter(function(o){return filter==='todos'||o.c.cond===filter||o.c.type===filter;});
+    var list=CARS.map(function(c,i){return {c:c,i:i};}).filter(function(o){return visible(o.c)&&(filter==='todos'||o.c.cond===filter||o.c.type===filter);});
     $('grid').innerHTML=list.length?list.map(function(o){
       var c=o.c;
-      return '<article class="car"><div class="pic"><span class="tag'+(c.cond==='Nuevo'?'':' used')+'">'+c.cond+'</span>'+silhouette(c.type,COLORS[c.color].c,'#143329')+'</div>'+
+      return '<article class="car"><div class="pic'+(c.foto?' foto':'')+'"><span class="tag'+(c.cond==='Nuevo'?'':' used')+'">'+c.cond+'</span>'+(c.foto?'<img src="'+c.foto+'" alt="'+c.name+' (foto de ejemplo)" loading="lazy" width="800" height="498">':silhouette(c.type,COLORS[c.color].c,'#1C1C1E'))+'</div>'+
         '<div class="info"><h3>'+c.name+'</h3><div class="meta">'+c.year+' · '+LABEL[c.type]+' · '+COLORS[c.color].n+'</div>'+
         '<div class="foot"><button type="button" data-i="'+o.i+'">Ver en 360°</button></div></div></article>';
     }).join(''):'<p class="vacio">No hay autos con ese filtro. Prueba con otro tipo.</p>';
