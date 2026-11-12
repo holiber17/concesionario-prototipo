@@ -68,7 +68,7 @@ nav.main a:hover{color:var(--niebla)}
 .models{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .models button{background:transparent;border:1px solid var(--pista-3);color:var(--niebla-2);padding:8px 14px;border-radius:2px;font-weight:500;min-height:40px}
 .models button[aria-pressed="true"]{border-color:var(--laton);color:var(--niebla);background:rgba(225,29,46,.2)}
-.stage{position:relative;aspect-ratio:16/10;min-height:340px;background:radial-gradient(ellipse at 50% 38%,#2c2c30 0%,#141415 52%,#0B0B0C 100%);border:1px solid var(--pista-3);border-radius:6px;overflow:hidden;touch-action:pan-y}
+.stage{position:relative;width:100%;aspect-ratio:16/10;min-height:340px;background:radial-gradient(ellipse at 50% 38%,#2c2c30 0%,#141415 52%,#0B0B0C 100%);border:1px solid var(--pista-3);border-radius:6px;overflow:hidden;touch-action:pan-y}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 .stage canvas:active{cursor:grabbing}
 .badge360{position:absolute;left:14px;top:14px;display:flex;align-items:baseline;gap:8px;background:rgba(11,11,12,.7);border:1px solid var(--linea);padding:6px 12px;border-radius:2px;font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:15px;pointer-events:none}
@@ -121,6 +121,28 @@ dl.specs dd{text-align:right;font-weight:600}
 .swatches button{width:40px;height:40px;border-radius:50%;border:2px solid rgba(244,244,245,.3);box-shadow:inset 0 0 0 2px var(--asfalto);padding:0}
 .swatches button[aria-pressed="true"]{border-color:var(--laton)}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.swrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.otro-color{position:relative;width:40px;height:40px;border-radius:50%;border:2px dashed rgba(244,244,245,.55);background:conic-gradient(#E11D2E,#F2B33D,#2FBF71,#2546C8,#9B5DE5,#E11D2E);box-shadow:inset 0 0 0 4px var(--asfalto);cursor:pointer}
+.otro-color input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
+.otro-color:focus-within{outline:2px solid var(--laton-2);outline-offset:2px}
+/* Estudio 3D (abrir, medir y probar el garaje) */
+.probar{margin-top:30px;padding-top:4px;border-top:1px solid var(--pista-3)}
+.tbtns{display:flex;gap:8px;flex-wrap:wrap}
+.tbtns button{background:transparent;border:1px solid var(--pista-3);color:var(--niebla);padding:8px 14px;border-radius:2px;font-weight:600;min-height:44px}
+.tbtns button:hover{border-color:var(--laton)}
+.tbtns button[aria-pressed="true"]{background:var(--laton);border-color:var(--laton);color:#fff}
+.tnota{font-size:14px;color:var(--niebla-2);margin-top:8px;max-width:60ch}
+.tnota:empty{display:none}
+.grow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:end}
+.grow label{display:grid;gap:4px;font-size:13px;color:var(--niebla-2);min-width:0}
+.grow input{width:100%;min-width:0;background:var(--pista);color:var(--niebla);border:1px solid var(--pista-3);border-radius:2px;padding:10px;min-height:44px;font:inherit;font-variant-numeric:tabular-nums}
+.grow input:focus-visible{border-color:var(--laton)}
+.veredicto{margin-top:10px;font-weight:600;padding-left:12px;border-left:3px solid transparent}
+.veredicto:empty{display:none}
+.veredicto.bien{border-color:#2FBF71}
+.veredicto.justo{border-color:#F2B33D}
+.veredicto.mal{border-color:var(--laton)}
+.tlink{background:none;border:0;color:var(--laton-2);text-decoration:underline;padding:10px 0;margin-top:8px;font-weight:600;min-height:44px}
 
 /* Inventario */
 .inventario{padding-block:56px;border-top:1px solid var(--linea)}
@@ -224,6 +246,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   .frow{grid-template-columns:minmax(0,1fr)}
   .stage{aspect-ratio:4/3}
   .views button{padding:6px 10px}
+  .grow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grow button{grid-column:1/-1}
   .hint{display:none}
 }
 </style>
@@ -291,11 +315,37 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
         <dl class="specs" id="specs"></dl>
 
         <div class="block-title">Color <span id="colorName"></span></div>
-        <div class="swatches" id="swatches" role="group" aria-label="Color de pintura"></div>
+        <div class="swrow">
+          <div class="swatches" id="swatches" role="group" aria-label="Color de pintura"></div>
+          <label class="otro-color" title="Elegir cualquier color"><input type="color" id="colorLibre" value="#2546C8" aria-label="Elegir cualquier color"></label>
+        </div>
 
         <div class="cta-row">
           <button class="btn" type="button" data-wa>Preguntar por WhatsApp</button>
           <button class="btn ghost" type="button" data-toast="Aquí se abriría el formulario de prueba de manejo.">Agendar prueba de manejo</button>
+        </div>
+
+        <div class="probar" id="probar">
+          <div class="block-title">Ábrelo y mídelo</div>
+          <div class="tbtns">
+            <button type="button" data-parte="puertas" aria-pressed="false" data-solo-auto>Abrir puertas</button>
+            <button type="button" data-parte="capo" aria-pressed="false" data-solo-auto>Abrir capó</button>
+            <button type="button" id="verMedidas" aria-pressed="false">Ver medidas</button>
+          </div>
+          <p class="tnota">También puedes tocar una puerta o el capó en el visor para abrirlos.</p>
+          <p class="tnota" id="medidasTxt"></p>
+          <form class="garaje" id="garaje" novalidate>
+            <div class="block-title">¿Cabe en tu garaje?</div>
+            <div class="grow">
+              <label>Largo<input id="gL" type="text" inputmode="decimal" placeholder="5,20" autocomplete="off" aria-describedby="gAyuda"></label>
+              <label>Ancho<input id="gW" type="text" inputmode="decimal" placeholder="2,80" autocomplete="off" aria-describedby="gAyuda"></label>
+              <label>Alto<input id="gH" type="text" inputmode="decimal" placeholder="2,10" autocomplete="off" aria-describedby="gAyuda"></label>
+              <button class="btn ghost" type="submit">Probar</button>
+            </div>
+            <p class="tnota" id="gAyuda">En metros, medido por dentro. Si el portón es más bajo que el techo, pon la altura del portón.</p>
+            <p class="veredicto" id="veredicto" role="status" aria-live="polite"></p>
+          </form>
+          <button type="button" class="tlink" id="resetEstudio">Volver a como era</button>
         </div>
       </div>
     </div>
@@ -516,7 +566,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
   });
 
   /* ---------- estado ---------- */
-  var cur=0, colorIdx=CARS[0].color;
+  var cur=0, colorIdx=CARS[0].color, colorHex=null;
+  function colorActual(){return colorIdx>=0?COLORS[colorIdx].c:colorHex;}
 
   /* ---------- 3D ---------- */
   var BODY={
@@ -526,7 +577,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     ev:{L:4.30,W:1.84,gc:.16,R:.37,wb:2.75,off:.80,noseH:.52,hoodH:.78,belt:.92,trunk:.95,wsX:1.10,rgX:-1.80,rfX:.45,rrX:-1.40,roofH:1.56}
   };
   var T=window.THREE, renderer, scene, camera, controls, carGroup, stageEl=$('stage');
-  var paint, glassMat, tireMat, rimMat, darkMat, wellMat, lightMat, tailMat, chromeMat, leatherMat, caliperMat, grilleMat, plateMat;
+  var paint, glassMat, tireMat, rimMat, darkMat, wellMat, lightMat, tailMat, chromeMat, leatherMat, caliperMat, grilleMat, plateMat, huecoMat, forroMat;
   var goal=null, autoResume;
 
   function smoothNormals(geo){
@@ -713,17 +764,56 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
     /* pilar B, juntas, molduras y manijas */
     if(key!=='coupe') box(.1,P.roofH-P.belt-.08,Wc+.012,darkMat,bx,(P.roofH-.05+P.belt)/2,0);
-    var seams=key==='coupe'?[P.wsX-.2,P.rgX+.4]:[P.wsX-.25,bx,P.rgX+.4];
-    var sh=P.belt-gc-.2;
-    seams.forEach(function(x){[-1,1].forEach(function(sd){box(.014,sh,.006,darkMat,x,gc+.12+sh/2,sd*(W/2+.005));});});
+
+    /* puertas que se abren: cada una cuelga de una bisagra en su borde delantero.
+       El borde de abajo esquiva el paso de rueda; detrás queda un hueco oscuro que se ve al abrir. */
+    function puerta(xb,xa,sd,manija){
+      var y0=gc+.14,y1=P.belt-.05,ar=ra+.03,n=40,i,x;
+      function piso(x){
+        var y=y0;
+        [xr,xf].forEach(function(c){var d=x-c;if(Math.abs(d)<ar)y=Math.max(y,P.R+Math.sqrt(ar*ar-d*d)+.02);});
+        return y;
+      }
+      var a=xa+.006,b=xb-.006,s=new T.Shape();
+      s.moveTo(a-xb,piso(a));
+      for(i=1;i<=n;i++){x=a+(b-a)*i/n;s.lineTo(x-xb,piso(x));}
+      s.lineTo(b-xb,y1);s.lineTo(a-xb,y1);s.closePath();
+      var piv=new T.Group();piv.position.set(xb,0,sd*(W/2+.004));
+      var hoja=new T.Mesh(new T.ExtrudeGeometry(s,{depth:.03,bevelEnabled:false}),paint);
+      hoja.position.z=sd>0?0:-.03;hoja.castShadow=true;piv.add(hoja);
+      var sg=new T.ShapeGeometry(s);
+      var forro=new T.Mesh(sg,forroMat);forro.position.z=-sd*.0015;piv.add(forro);
+      var mj=new T.Mesh(new T.BoxGeometry(.16,.022,.012),chromeMat);mj.position.set(manija-xb,P.belt-.09,sd*.036);piv.add(mj);
+      var hueco=new T.Mesh(sg,huecoMat);hueco.position.set(xb,0,sd*(W/2+.001));g.add(hueco);
+      g.add(piv);
+      var parte={piv:piv,tipo:'puerta',signo:sd,base:0,max:1.15,act:0,obj:0};
+      piv.userData.parte=parte;
+      return parte;
+    }
+    /* capó: tapa apoyada sobre la línea del capó, con bisagra al pie del parabrisas */
+    function capo(){
+      var Ax=x1-.42,Ay=P.hoodH,Bx=P.wsX+.03,By=P.belt;
+      var dx=Ax-Bx,dy=Ay-By,len=Math.sqrt(dx*dx+dy*dy)-.03,ang=Math.atan2(dy,dx);
+      var nx=-Math.sin(ang),ny=Math.cos(ang),off=.049,wz=W*.78;
+      var piv=new T.Group();piv.position.set(Bx+nx*off,By+ny*off,0);piv.rotation.z=ang;
+      var tapa=new T.Mesh(new T.BoxGeometry(len,.022,wz),paint);tapa.position.set(len/2,.011,0);tapa.castShadow=true;piv.add(tapa);
+      var base=new T.Group();base.position.copy(piv.position);base.rotation.z=ang;
+      var hueco=new T.Mesh(new T.PlaneGeometry(len-.04,wz-.04),huecoMat);hueco.rotation.x=-Math.PI/2;hueco.position.set(len/2,-.003,0);base.add(hueco);
+      g.add(base,piv);
+      var parte={piv:piv,tipo:'capo',signo:1,base:ang,max:.85,act:0,obj:0};
+      piv.userData.parte=parte;
+      return parte;
+    }
+    var cortes=key==='coupe'?[P.wsX-.2,P.rgX+.4]:[P.wsX-.25,bx,P.rgX+.4];
+    var partes={puertas:[],capo:[capo()]};
     [-1,1].forEach(function(sd){
       box(P.wb*.72,.05,.006,darkMat,(xf+xr)/2,gc+.08,sd*(W/2+.005));
       box(P.wsX-P.rgX,.018,.006,chromeMat,(P.wsX+P.rgX)/2,P.belt+.03,sd*(Wc/2+.004));
       ball(.07,.05,.1,paint,P.wsX+.06,P.belt+.14,sd*(Wc/2+.1));
       box(.05,.03,.12,darkMat,P.wsX+.05,P.belt+.1,sd*(Wc/2+.03));
-      box(.16,.022,.012,chromeMat,bx+.32,P.belt-.09,sd*(W/2+.008));
-      if(key!=='coupe')box(.16,.022,.012,chromeMat,P.rgX+.9,P.belt-.09,sd*(W/2+.008));
+      for(var i=0;i<cortes.length-1;i++)partes.puertas.push(puerta(cortes[i],cortes[i+1],sd,i===0?bx+.32:P.rgX+.9));
     });
+    g.userData.partes=partes;
 
     /* molduras de pasos de rueda */
     var arcLen=Math.PI+2*(-a2);
@@ -847,6 +937,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     scene.add(new T.LineSegments(tg,new T.LineBasicMaterial({color:0xE11D2E,transparent:true,opacity:.6})));
     var ring=new T.Mesh(new T.RingGeometry(3.62,3.655,120).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xE11D2E,transparent:true,opacity:.5,side:T.DoubleSide}));
     ring.position.y=.003;scene.add(ring);
+    scene.add(estudio);
 
     paint=new T.MeshPhysicalMaterial({color:COLORS[colorIdx].c,metalness:.35,roughness:.34,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:.9});
     glassMat=new T.MeshPhysicalMaterial({color:0x0a1316,metalness:.3,roughness:.04,clearcoat:1,envMapIntensity:1.6,transparent:true,opacity:.5,side:T.DoubleSide,depthWrite:false});
@@ -861,6 +952,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     caliperMat=new T.MeshStandardMaterial({color:0xb5302a,roughness:.4,metalness:.3});
     grilleMat=new T.MeshStandardMaterial({color:0xffffff,map:meshTexture(),roughness:.45,metalness:.5});
     plateMat=new T.MeshStandardMaterial({color:0xffffff,map:plateTexture(),roughness:.5,metalness:0});
+    huecoMat=new T.MeshBasicMaterial({color:0x050606,side:T.DoubleSide});
+    forroMat=new T.MeshStandardMaterial({color:0x1b1f20,roughness:.8,metalness:0,side:T.DoubleSide});
 
     controls=new T.OrbitControls(camera,renderer.domElement);
     controls.target.set(0,.72,0);
@@ -876,6 +969,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
 
     new ResizeObserver(resize).observe(stageEl);resize();
     setSpin(controls.autoRotate);
+    enlazarToque();
     loop();
     return true;
   }
@@ -892,6 +986,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     requestAnimationFrame(loop);
     if(document.hidden||mode!=='3d')return;
     if(goal){camera.position.lerp(goal,.09);if(camera.position.distanceTo(goal)<.03)goal=null;}
+    animarPartes();
     controls.update();
     var d=Math.round((Math.atan2(camera.position.x,camera.position.z)*180/Math.PI+360)%360);
     if(d!==lastDeg){lastDeg=d;$('deg').textContent=d+'°';}
@@ -902,14 +997,15 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     if(!renderer)return;
     if(carGroup){scene.remove(carGroup);carGroup.traverse(function(o){if(o.isMesh)o.geometry.dispose();});}
     carGroup=buildCar(key);scene.add(carGroup);
+    alCambiarAuto();
   }
   function showFallback(){
     $('nowebgl').style.display='grid';$('views').style.display='none';
-    document.querySelector('.badge360').style.display='none';$('hint').style.display='none';
+    document.querySelector('.badge360').style.display='none';$('hint').style.display='none';$('probar').hidden=true;
     renderFallback();
   }
   function renderFallback(){
-    var c=CARS[cur];$('fallbackSil').innerHTML=silhouette(c.type,COLORS[colorIdx].c,'#141415');
+    var c=CARS[cur];$('fallbackSil').innerHTML=silhouette(c.type,colorActual(),'#141415');
   }
   function hideHint(){$('hint').classList.add('off');}
   function setSpin(on){$('spin').setAttribute('aria-pressed',on?'true':'false');}
@@ -942,8 +1038,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     var src=renderer.domElement,w=src.width,h=src.height,ow=Math.min(w,1100),oh=Math.round(h*ow/w);
     var off=document.createElement('canvas');off.width=ow;off.height=oh;
     var x=off.getContext('2d'),out=[];
-    var savePos=camera.position.clone(),saveAuto=controls.autoRotate;
-    controls.autoRotate=false;goal=null;
+    var savePos=camera.position.clone(),saveAuto=controls.autoRotate,saveEst=estudio.visible;
+    controls.autoRotate=false;goal=null;estudio.visible=false;
     for(var i=0;i<36;i++){
       var a=i*10*Math.PI/180;
       camera.position.set(Math.sin(a)*7.2,1.45,Math.cos(a)*7.2);camera.lookAt(controls.target);
@@ -953,7 +1049,7 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
       x.fillStyle=g;x.fillRect(0,0,ow,oh);x.drawImage(src,0,0,ow,oh);
       out.push(off.toDataURL('image/jpeg',.82));
     }
-    camera.position.copy(savePos);controls.autoRotate=saveAuto;controls.update();
+    camera.position.copy(savePos);controls.autoRotate=saveAuto;estudio.visible=saveEst;controls.update();
     return out;
   }
   function paintPhoto(){
@@ -1103,13 +1199,171 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     quitarGiro();photoSource='example';photoFrames=[];dirtyFrames=true;ensurePhotos();
   });
 
+  /* ---------- estudio 3D: abrir, medir y probar el garaje ----------
+     Portado del estudio de puertas de Garajeo. Allá la puerta se arma con sus medidas,
+     se abre, se cambia de color y se prueba en la abertura; acá lo mismo con autos y garajes. */
+  var estudio=T?new T.Group():{visible:false};
+  var cotas=null, garajeObj=null, dims=null, garajeAct=null, verCotas=false;
+  var ROJO=0xE11D2E, VERDE=0x2FBF71, AMBAR=0xF2B33D;
+  function partesAct(){return (carGroup&&carGroup.userData.partes)||{puertas:[],capo:[]};}
+  function m(v){return v.toFixed(2).replace('.',',')+' m';}
+
+  function animarPartes(){
+    var p=partesAct();
+    p.puertas.concat(p.capo).forEach(function(x){
+      if(x.act===x.obj)return;
+      x.act=(reduce||Math.abs(x.obj-x.act)<.003)?x.obj:x.act+(x.obj-x.act)*.14;
+      if(x.tipo==='puerta')x.piv.rotation.y=x.signo*x.act;else x.piv.rotation.z=x.base+x.act;
+    });
+  }
+  function abrir(lista,abierto){lista.forEach(function(x){x.obj=abierto?x.max:0;});marcarPartes();}
+  function marcarPartes(){
+    var p=partesAct();
+    var bp=document.querySelector('[data-parte="puertas"]'),bc=document.querySelector('[data-parte="capo"]');
+    var pa=p.puertas.some(function(x){return x.obj>0;}),ca=p.capo.some(function(x){return x.obj>0;});
+    bp.setAttribute('aria-pressed',pa);bp.textContent=pa?'Cerrar puertas':'Abrir puertas';
+    bc.setAttribute('aria-pressed',ca);bc.textContent=ca?'Cerrar capó':'Abrir capó';
+  }
+
+  function cartel(txt,fondo){
+    var c=document.createElement('canvas'),x=c.getContext('2d'),f='700 40px "Hanken Grotesk",Arial,sans-serif';
+    x.font=f;var w=Math.ceil(x.measureText(txt).width)+40;c.width=w;c.height=64;
+    x.font=f;x.fillStyle=fondo||'#0B0B0C';x.fillRect(0,0,w,64);
+    x.fillStyle='#F4F4F5';x.textBaseline='middle';x.fillText(txt,20,34);
+    var t=new T.CanvasTexture(c);t.encoding=T.sRGBEncoding;
+    var s=new T.Sprite(new T.SpriteMaterial({map:t,depthTest:false,transparent:true}));
+    s.renderOrder=10;s.scale.set(.2*w/64,.2,1);return s;
+  }
+  function cota(a,b,txt,perp,col,fondo){
+    var g=new T.Group(),mat=new T.LineBasicMaterial({color:col||ROJO,depthTest:false,transparent:true});
+    function linea(p,q){var l=new T.Line(new T.BufferGeometry().setFromPoints([p,q]),mat);l.renderOrder=9;g.add(l);}
+    linea(a,b);
+    var tope=perp.clone().multiplyScalar(.08);
+    [a,b].forEach(function(p){linea(p.clone().sub(tope),p.clone().add(tope));});
+    var s=cartel(txt,fondo);s.position.copy(a).add(b).multiplyScalar(.5).addScaledVector(perp,.2);g.add(s);
+    return g;
+  }
+  function descartar(o){
+    if(!o)return;estudio.remove(o);
+    o.traverse(function(x){if(x.geometry)x.geometry.dispose();if(x.material){if(x.material.map)x.material.map.dispose();x.material.dispose();}});
+  }
+  function medirAuto(){
+    var box=new T.Box3().setFromObject(carGroup),s=carGroup.scale.x;
+    dims={box:box,s:s,L:(box.max.x-box.min.x)/s,W:(box.max.z-box.min.z)/s,H:box.max.y/s};
+  }
+  function dibujarCotas(){
+    descartar(cotas);cotas=null;
+    if(!verCotas||!dims)return;
+    var b=dims.box,V=T.Vector3;cotas=new T.Group();
+    cotas.add(cota(new V(b.min.x,.01,b.max.z+.35),new V(b.max.x,.01,b.max.z+.35),'Largo '+m(dims.L),new V(0,0,1)));
+    cotas.add(cota(new V(b.max.x+.35,.01,b.min.z),new V(b.max.x+.35,.01,b.max.z),'Ancho '+m(dims.W),new V(1,0,0)));
+    cotas.add(cota(new V(b.min.x-.3,0,b.max.z),new V(b.min.x-.3,b.max.y,b.max.z),'Alto '+m(dims.H),new V(-1,0,0)));
+    estudio.add(cotas);
+  }
+  function dibujarGaraje(){
+    descartar(garajeObj);garajeObj=null;
+    if(!garajeAct||!dims)return null;
+    var g=garajeAct,s=dims.s,L=g.L*s,Wd=g.W*s,H=g.H*s,b=dims.box;
+    var cx=(b.min.x+b.max.x)/2,cz=(b.min.z+b.max.z)/2;
+    var r=veredicto(g),col=r.clase==='mal'?ROJO:r.clase==='justo'?AMBAR:VERDE;
+    var o=new T.Group(),mp=new T.MeshBasicMaterial({color:col,transparent:true,opacity:.13,side:T.DoubleSide,depthWrite:false});
+    var fondo=new T.Mesh(new T.PlaneGeometry(Wd,H),mp);fondo.rotation.y=Math.PI/2;fondo.position.set(cx+L/2,H/2,cz);o.add(fondo);
+    [-1,1].forEach(function(sd){var p=new T.Mesh(new T.PlaneGeometry(L,H),mp.clone());p.position.set(cx,H/2,cz+sd*Wd/2);o.add(p);});
+    var bordes=new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(L,H,Wd)),new T.LineBasicMaterial({color:col,transparent:true,opacity:.85}));
+    bordes.position.set(cx,H/2,cz);o.add(bordes);
+    var et=cartel('Tu garaje: '+[g.L,g.W,g.H].map(function(v){return v.toFixed(2).replace('.',',');}).join(' × ')+' m',r.clase==='mal'?'#9E1520':'#0B0B0C');
+    et.position.set(cx,H+.25,cz);o.add(et);
+    garajeObj=o;estudio.add(o);
+    return r;
+  }
+  function veredicto(g){
+    var fL=g.L-dims.L,fW=g.W-dims.W,fH=g.H-dims.H,falta=[];
+    if(fL<0)falta.push(m(-fL)+' de largo');
+    if(fW<0)falta.push(m(-fW)+' de ancho');
+    if(fH<0)falta.push(m(-fH)+' de alto');
+    if(falta.length)return {clase:'mal',txt:'No cabe: le faltan '+falta.join(', ').replace(/, ([^,]*)$/,' y $1')+'.'};
+    var moto=CARS[cur].type==='moto';
+    if(!moto&&fW<.6)return {clase:'justo',txt:'Cabe, pero justo: quedan '+m(fW)+' de ancho libre. Para abrir la puerta y bajarte hacen falta unos 60 cm de un lado.'};
+    return {clase:'bien',txt:'Cabe. Te sobran '+m(fL)+' de largo, '+m(fW)+' de ancho y '+m(fH)+' de alto.'};
+  }
+  function textoMedidas(){
+    if(!dims){$('medidasTxt').textContent='';return;}
+    $('medidasTxt').textContent='Medidas del modelo 3D: '+[dims.L,dims.W,dims.H].map(function(v){return v.toFixed(2).replace('.',',');}).join(' × ')+' m (largo × ancho con espejos × alto). Son de ejemplo: en el sitio real salen de la ficha de cada auto.';
+  }
+  function alCambiarAuto(){
+    medirAuto();dibujarCotas();textoMedidas();marcarPartes();
+    document.querySelectorAll('[data-solo-auto]').forEach(function(b){b.hidden=CARS[cur].type==='moto';});
+    if(garajeAct)mostrarVeredicto(dibujarGaraje());
+  }
+  function mostrarVeredicto(r){
+    var v=$('veredicto');
+    if(!r){v.textContent='';v.className='veredicto';return;}
+    v.textContent=r.txt;v.className='veredicto '+r.clase;
+  }
+  function en3D(){
+    if(!renderer)return false;
+    if(mode!=='3d')setMode('3d');
+    controls.autoRotate=false;setSpin(false);hideHint();
+    return true;
+  }
+  function mirarA(x,y,z){var v=new T.Vector3(x,y,z);if(reduce){camera.position.copy(v);goal=null;}else goal=v;
+    document.querySelectorAll('#views [data-view]').forEach(function(b){b.setAttribute('aria-pressed','false');});}
+
+  document.querySelector('.tbtns').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b||!en3D())return;
+    var p=partesAct();
+    if(b.dataset.parte==='puertas'){abrir(p.puertas,!p.puertas.some(function(x){return x.obj>0;}));mirarA(3.2,2.2,6.4);}
+    else if(b.dataset.parte==='capo'){abrir(p.capo,!p.capo.some(function(x){return x.obj>0;}));mirarA(6.4,3.2,3);}
+    else if(b.id==='verMedidas'){verCotas=!verCotas;b.setAttribute('aria-pressed',verCotas);b.textContent=verCotas?'Ocultar medidas':'Ver medidas';dibujarCotas();if(verCotas)mirarA(5.6,4.6,6.2);}
+  });
+  function numero(id){var v=parseFloat(String($(id).value).replace(',','.'));return v>0?v:NaN;}
+  $('garaje').addEventListener('submit',function(e){
+    e.preventDefault();
+    var g={L:numero('gL'),W:numero('gW'),H:numero('gH')};
+    if(isNaN(g.L)||isNaN(g.W)||isNaN(g.H)){mostrarVeredicto({clase:'mal',txt:'Escribe el largo, el ancho y el alto de tu garaje en metros, por ejemplo 5,20.'});return;}
+    if(g.L>30||g.W>30||g.H>10){mostrarVeredicto({clase:'mal',txt:'Revisa las medidas: van en metros (5,20), no en centímetros.'});return;}
+    if(!en3D()){mostrarVeredicto({clase:'mal',txt:'Este navegador no puede mostrar el 3D, así que no se puede dibujar el garaje.'});return;}
+    garajeAct=g;mostrarVeredicto(dibujarGaraje());mirarA(6.2,6.4,5.6);
+  });
+  $('resetEstudio').addEventListener('click',function(){
+    if(!renderer)return;
+    var p=partesAct();abrir(p.puertas.concat(p.capo),false);
+    verCotas=false;var bm=$('verMedidas');bm.setAttribute('aria-pressed','false');bm.textContent='Ver medidas';dibujarCotas();
+    garajeAct=null;dibujarGaraje();mostrarVeredicto(null);['gL','gW','gH'].forEach(function(id){$(id).value='';});
+    colorHex=null;colorIdx=CARS[cur].color;paint.color.set(colorActual());renderSwatches();refreshExample();
+    if(mode==='3d')mirarA(5.3,1.6,4.7);
+  });
+  $('colorLibre').addEventListener('input',function(e){
+    colorHex=e.target.value;colorIdx=-1;if(paint)paint.color.set(colorHex);
+    renderSwatches();if(!renderer)renderFallback();refreshExample();
+  });
+  /* tocar una puerta o el capó (sin arrastrar) la abre o la cierra */
+  var toque=null,ray=T?new T.Raycaster():null;
+  function enlazarToque(){
+    var cv=renderer.domElement;
+    cv.addEventListener('pointerdown',function(e){toque={x:e.clientX,y:e.clientY,t:performance.now()};});
+    cv.addEventListener('pointerup',function(e){
+      if(!toque||Math.hypot(e.clientX-toque.x,e.clientY-toque.y)>6||performance.now()-toque.t>500){toque=null;return;}
+      toque=null;
+      var r=cv.getBoundingClientRect();
+      ray.setFromCamera(new T.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);
+      var hits=ray.intersectObject(carGroup,true);
+      for(var i=0;i<hits.length;i++){
+        var o=hits[i].object;
+        while(o&&!(o.userData&&o.userData.parte))o=o.parent;
+        if(o){var pa=o.userData.parte;pa.obj=pa.obj>0?0:pa.max;marcarPartes();return;}
+        if(hits[i].object.material!==glassMat)return;
+      }
+    });
+  }
+
   /* ---------- interfaz ---------- */
   function renderModels(){
     $('models').innerHTML=CARS.map(function(c,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(i===cur)+'">'+c.name+'</button>';}).join('');
   }
   function renderSwatches(){
     $('swatches').innerHTML=COLORS.map(function(c,i){return '<button type="button" data-c="'+i+'" style="background:'+c.c+'" aria-label="'+c.n+'" aria-pressed="'+(i===colorIdx)+'" title="'+c.n+'"></button>';}).join('');
-    $('colorName').textContent=COLORS[colorIdx].n;
+    $('colorName').textContent=colorIdx>=0?COLORS[colorIdx].n:'Personalizado';
   }
   function renderPanel(){
     var c=CARS[cur];
@@ -1118,8 +1372,8 @@ footer .wrap{display:flex;gap:8px 24px;justify-content:space-between;flex-wrap:w
     $('specs').innerHTML=c.specs.map(function(s){return '<dt>'+s[0]+'</dt><dd class="num">'+s[1]+'</dd>';}).join('');
   }
   function selectCar(i,opts){
-    cur=i;colorIdx=CARS[i].color;
-    if(paint)paint.color.set(COLORS[colorIdx].c);
+    cur=i;colorIdx=CARS[i].color;colorHex=null;
+    if(paint)paint.color.set(colorActual());
     renderModels();renderSwatches();renderPanel();setCar(CARS[i].modelo3d||CARS[i].type);
     if(!renderer)renderFallback();
     if(CARS[i].giro){loadGiro(CARS[i]);setMode('photos');}
